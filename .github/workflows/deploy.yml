@@ -2,13 +2,13 @@ name: Deploy to Server
 
 on:
   push:
-    branches: [ main ]  # or whatever branch you want to monitor
+    branches: [ main ]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Pull on Server via SSH
+      - name: Pull from GitHub on server
         uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.SERVER_HOST }}
@@ -17,3 +17,4 @@ jobs:
           script: |
             cd ~/chris-space
             git pull origin main
+            docker compose up -d --build
