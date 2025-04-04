@@ -20,16 +20,16 @@ services:
       context: ./frontend
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.frontend.rule=Host(`${DOMAIN}`)"
+      - "traefik.http.routers.frontend.rule=Host(`chris-space.com`) || Host(`www.chris-space.com`)"
       - "traefik.http.routers.frontend.entrypoints=websecure"
       - "traefik.http.routers.frontend.tls=true"
       - "traefik.http.routers.frontend.tls.certresolver=letsencrypt"
-    expose:
-      - "8000"
+      - "traefik.http.services.frontend.loadbalancer.server.port=8000"
     networks:
       - web
     volumes:
       - ./frontend/static:/app/static
+
 networks:
   web:
     external: false

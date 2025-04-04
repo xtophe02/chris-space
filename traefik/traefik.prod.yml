@@ -8,11 +8,14 @@ entryPoints:
           scheme: https
   websecure:
     address: ":443"
+    http:
+      tls:
+        certResolver: letsencrypt
 
 certificatesResolvers:
   letsencrypt:
     acme:
-      email: ${EMAIL}
+      email: "christophe@chris-space.com"
       storage: /letsencrypt/acme.json
       httpChallenge:
         entryPoint: web
@@ -20,6 +23,11 @@ certificatesResolvers:
 providers:
   docker:
     exposedByDefault: false
+    network: web
 
 log:
-  level: INFO
+  level: DEBUG
+
+api:
+  insecure: true
+  dashboard: true
