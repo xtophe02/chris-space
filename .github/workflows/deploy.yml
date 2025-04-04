@@ -21,4 +21,4 @@ jobs:
           script: |
             cd ~/chris-space
             git pull origin main
-            docker compose up -d --build
+            docker compose -f docker-compose.prod.yml down && docker compose -f docker-compose.prod.yml up --build -d

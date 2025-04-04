@@ -5,79 +5,98 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chris Space</title>
     <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/bulma/1.0.0/css/bulma.min.css"
-    />
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css"
+  >
     <script src="https://unpkg.com/htmx.org@2.0.4"></script>
     <script src="https://unpkg.com/alpinejs@3.14.9" defer></script>
     <style>
-      .card { height: 100%; }
-      .card-content { height: 100%; display: flex; flex-direction: column; }
-      .tech-tags { margin-top: auto; }
+      body {
+        background-color: #f9f9f9;
+      }
+
+      .navbar {
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      }
+
+      .hero {
+        background: linear-gradient(120deg, #209cee 0%, #00d1b2 100%);
+        color: white;
+      }
+
+      .card {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        border-radius: 12px;
+      }
+
+      .tech-tags {
+        margin-top: auto;
+      }
+
+      .preview-img {
+        border-radius: 8px;
+        max-height: 180px;
+        object-fit: cover;
+        width: 100%;
+      }
+
+      .button {
+        transition: all 0.2s ease-in-out;
+      }
+
+      .button:hover {
+        transform: translateY(-2px);
+      }
     </style>
   </head>
   <body>
     <!-- Navbar -->
-    <nav
-      class="navbar is-primary"
-      role="navigation"
-      aria-label="main navigation"
-    >
-      <div class="navbar-brand">
-        <a class="navbar-item" href="/">
-          <strong>Chris Space</strong>
-        </a>
-      </div>
+    <nav class="navbar is-white">
+      <div class="container">
+        <div class="navbar-brand">
+          <a class="navbar-item has-text-weight-bold is-size-5" href="/">Chris Space</a>
+        </div>
 
-      <div class="navbar-menu">
-        <div class="navbar-end">
-          <a class="navbar-item" 
-             hx-get="/blog"
-             hx-target="#content-area"
-             hx-push-url="true">
-            Blog
-          </a>
-          <a class="navbar-item"
-             hx-get="/portfolio"
-             hx-target="#content-area"
-             hx-push-url="true">
-            Portfolio
-          </a>
+        <div class="navbar-menu">
+          <div class="navbar-end">
+            <a class="navbar-item"
+              hx-get="/blog"
+              hx-target="#content-area"
+              hx-push-url="true">Blog</a>
+            <a class="navbar-item"
+              hx-get="/portfolio"
+              hx-target="#content-area"
+              hx-push-url="true">Portfolio</a>
+          </div>
         </div>
       </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero is-info is-medium">
-      <div class="hero-body">
-        <div class="container has-text-centered">
-          <h1 class="title is-1">
-            Welcome to Chris Space
-          </h1>
-          <h2 class="subtitle is-3">
-            AI Projects & Tech Insights
-          </h2>
-        </div>
+    <section class="hero is-medium">
+      <div class="hero-body has-text-centered">
+        <p class="title is-1">Welcome to Chris Space</p>
+        <p class="subtitle is-4">AI Projects & Tech Insights</p>
       </div>
     </section>
 
     <!-- Main Content Section -->
     <section class="section" id="content-area">
       <div class="container">
-        <!-- Latest Content Cards -->
-        <div class="columns is-centered">
-          <!-- Latest Blog Post Card -->
+        <div class="columns is-variable is-8 is-multiline is-centered">
+          <!-- Blog Card -->
           <div class="column is-5">
             <div class="card">
+              <div class="card-image">
+                <figure class="image is-4by2">
+                  <img class="preview-img" src="/static/img/blog.jpg" alt="Blog preview" />
+                </figure>
+              </div>
               <div class="card-content">
-                <p class="title is-4">{{ latest_post.title|default('Latest Blog Post') }}</p>
-                <p class="subtitle is-6 mb-4">
-                  {{ latest_post.date|default('Coming soon') }}
-                </p>
-                <p class="content">
-                  {{ latest_post.excerpt|default('Stay tuned for exciting content about AI, technology, and more.') }}
-                </p>
-                <button class="button is-primary mt-4"
+                <p class="title is-4 mb-2">{{ latest_post.title }}</p>
+                <p class="subtitle is-6 has-text-grey">{{ latest_post.date }}</p>
+                <p class="content mb-4">{{ latest_post.excerpt }}</p>
+                <button class="button is-link is-light"
                         hx-get="/api/posts"
                         hx-target="#blog-previews"
                         hx-swap="innerHTML">
@@ -87,22 +106,23 @@
             </div>
           </div>
 
-          <!-- Latest Project Card -->
+          <!-- Project Card -->
           <div class="column is-5">
             <div class="card">
+              <div class="card-image">
+                <figure class="image is-4by2">
+                  <img class="preview-img" src="/static/img/project.jpg" alt="Project preview" />
+                </figure>
+              </div>
               <div class="card-content">
-                <p class="title is-4">{{ latest_project.title|default('Latest Project') }}</p>
-                <p class="subtitle is-6 mb-4">
-                  {{ latest_project.description|default('Check out my latest work') }}
-                </p>
-                <div class="tech-tags">
-                  <div class="tags">
-                    {% for tech in latest_project.technologies|default(['Python', 'FastAPI', 'AI']) %}
-                      <span class="tag is-info">{{ tech }}</span>
-                    {% endfor %}
-                  </div>
+                <p class="title is-4 mb-2">{{ latest_project.title }}</p>
+                <p class="subtitle is-6 has-text-grey">{{ latest_project.description }}</p>
+                <div class="tags mt-2">
+                  {% for tech in latest_project.technologies %}
+                    <span class="tag is-info is-light">{{ tech }}</span>
+                  {% endfor %}
                 </div>
-                <button class="button is-primary mt-4"
+                <button class="button is-link is-light mt-4"
                         hx-get="/api/projects"
                         hx-target="#project-previews"
                         hx-swap="innerHTML">
@@ -113,7 +133,7 @@
           </div>
         </div>
 
-        <!-- Dynamic Content Areas -->
+        <!-- HTMX dynamic content -->
         <div class="columns is-centered mt-6">
           <div class="column is-10">
             <div id="blog-previews"></div>
