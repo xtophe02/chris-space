@@ -24,3 +24,6 @@ def read_root(request: Request):
             "technologies": ["Python", "FastAPI", "AI"]
         }
     })
+@app.get("/portfolio")
+def portfolio(request: Request):
+    return templates.TemplateResponse("portfolio.html", {"request": request})

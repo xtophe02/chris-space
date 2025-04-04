@@ -1,54 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chris Space</title>
-    <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css"
-  >
-    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
-    <script src="https://unpkg.com/alpinejs@3.14.9" defer></script>
-    <style>
-      body {
-        background-color: #f9f9f9;
-      }
-
-      .navbar {
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-      }
-
-      .hero {
-        background: linear-gradient(120deg, #209cee 0%, #00d1b2 100%);
-        color: white;
-      }
-
-      .card {
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        border-radius: 12px;
-      }
-
-      .tech-tags {
-        margin-top: auto;
-      }
-
-      .preview-img {
-        border-radius: 8px;
-        max-height: 180px;
-        object-fit: cover;
-        width: 100%;
-      }
-
-      .button {
-        transition: all 0.2s ease-in-out;
-      }
-
-      .button:hover {
-        transform: translateY(-2px);
-      }
-    </style>
-  </head>
+  {% include 'includes/head.html' %}
   <body>
     <!-- Navbar -->
     <nav class="navbar is-white">
