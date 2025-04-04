@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your App</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bulma/1.0.3/css/bulma.min.css"
+    />
+    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+    <script src="https://unpkg.com/alpinejs@3.14.9" defer></script>
+  </head>
+  <body>
+    <!-- Navbar using Bulma -->
+    <nav
+      class="navbar is-primary"
+      role="navigation"
+      aria-label="main navigation"
+    >
+      <div class="navbar-brand">
+        <a class="navbar-item" href="#">
+          <strong>Your App</strong>
+        </a>
+      </div>
+    </nav>
+
+    <!-- Hero Section using Bulma -->
+    <section class="hero is-info">
+      <div class="hero-body">
+        <p class="title">Welcome to Your App</p>
+        <p class="subtitle">This is a simple hero section using Bulma.</p>
+      </div>
+    </section>
+
+    <!-- Interactive Counter using Alpine.js -->
+    <div class="section" x-data="{ count: 0 }">
+      <div class="container">
+        <h2 class="title">Alpine.js Counter</h2>
+        <button class="button is-primary" @click="count++">Increment</button>
+        <button class="button is-danger" @click="count--">Decrement</button>
+        <p class="mt-4">Current Count123: <strong x-text="count"></strong></p>
+      </div>
+    </div>
+  </body>
+</html>
