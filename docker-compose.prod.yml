@@ -28,7 +28,8 @@ services:
       - "8000"
     networks:
       - web
-
+    volumes:
+      - ./frontend/static:/app/static
 networks:
   web:
     external: false
