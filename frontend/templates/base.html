@@ -3,43 +3,136 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Your App</title>
+    <title>Chris Space</title>
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/bulma/1.0.3/css/bulma.min.css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bulma/1.0.0/css/bulma.min.css"
     />
     <script src="https://unpkg.com/htmx.org@2.0.4"></script>
     <script src="https://unpkg.com/alpinejs@3.14.9" defer></script>
+    <style>
+      .card { height: 100%; }
+      .card-content { height: 100%; display: flex; flex-direction: column; }
+      .tech-tags { margin-top: auto; }
+    </style>
   </head>
   <body>
-    <!-- Navbar using Bulma -->
+    <!-- Navbar -->
     <nav
       class="navbar is-primary"
       role="navigation"
       aria-label="main navigation"
     >
       <div class="navbar-brand">
-        <a class="navbar-item" href="#">
-          <strong>Your App</strong>
+        <a class="navbar-item" href="/">
+          <strong>Chris Space</strong>
         </a>
+      </div>
+
+      <div class="navbar-menu">
+        <div class="navbar-end">
+          <a class="navbar-item" 
+             hx-get="/blog"
+             hx-target="#content-area"
+             hx-push-url="true">
+            Blog
+          </a>
+          <a class="navbar-item"
+             hx-get="/portfolio"
+             hx-target="#content-area"
+             hx-push-url="true">
+            Portfolio
+          </a>
+        </div>
       </div>
     </nav>
 
-    <!-- Hero Section using Bulma -->
-    <section class="hero is-info">
+    <!-- Hero Section -->
+    <section class="hero is-info is-medium">
       <div class="hero-body">
-        <p class="title">Welcome to Your App</p>
-        <p class="subtitle">This is a simple hero section using Bulma.</p>
+        <div class="container has-text-centered">
+          <h1 class="title is-1">
+            Welcome to Chris Space
+          </h1>
+          <h2 class="subtitle is-3">
+            AI Projects & Tech Insights
+          </h2>
+        </div>
       </div>
     </section>
 
-    <!-- Interactive Counter using Alpine.js -->
-    <div class="section" x-data="{ count: 0 }">
+    <!-- Main Content Section -->
+    <section class="section" id="content-area">
       <div class="container">
-        <h2 class="title">Alpine.js Counter</h2>
-        <button class="button is-primary" @click="count++">Increment</button>
-        <button class="button is-danger" @click="count--">Decrement</button>
-        <p class="mt-4">Current Count123: <strong x-text="count"></strong></p>
+        <!-- Latest Content Cards -->
+        <div class="columns is-centered">
+          <!-- Latest Blog Post Card -->
+          <div class="column is-5">
+            <div class="card">
+              <div class="card-content">
+                <p class="title is-4">{{ latest_post.title|default('Latest Blog Post') }}</p>
+                <p class="subtitle is-6 mb-4">
+                  {{ latest_post.date|default('Coming soon') }}
+                </p>
+                <p class="content">
+                  {{ latest_post.excerpt|default('Stay tuned for exciting content about AI, technology, and more.') }}
+                </p>
+                <button class="button is-primary mt-4"
+                        hx-get="/api/posts"
+                        hx-target="#blog-previews"
+                        hx-swap="innerHTML">
+                  View More Posts
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Latest Project Card -->
+          <div class="column is-5">
+            <div class="card">
+              <div class="card-content">
+                <p class="title is-4">{{ latest_project.title|default('Latest Project') }}</p>
+                <p class="subtitle is-6 mb-4">
+                  {{ latest_project.description|default('Check out my latest work') }}
+                </p>
+                <div class="tech-tags">
+                  <div class="tags">
+                    {% for tech in latest_project.technologies|default(['Python', 'FastAPI', 'AI']) %}
+                      <span class="tag is-info">{{ tech }}</span>
+                    {% endfor %}
+                  </div>
+                </div>
+                <button class="button is-primary mt-4"
+                        hx-get="/api/projects"
+                        hx-target="#project-previews"
+                        hx-swap="innerHTML">
+                  View More Projects
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dynamic Content Areas -->
+        <div class="columns is-centered mt-6">
+          <div class="column is-10">
+            <div id="blog-previews"></div>
+            <div id="project-previews"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Alpine.js Modal Component -->
+    <div x-data="{ isModalOpen: false, modalContent: '' }">
+      <div class="modal" :class="{ 'is-active': isModalOpen }">
+        <div class="modal-background" @click="isModalOpen = false"></div>
+        <div class="modal-content">
+          <div class="box">
+            <div x-html="modalContent"></div>
+          </div>
+        </div>
+        <button class="modal-close is-large" aria-label="close" @click="isModalOpen = false"></button>
       </div>
     </div>
   </body>

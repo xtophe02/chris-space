@@ -11,4 +11,16 @@ templates = Jinja2Templates(directory="templates")
 
 @app.get("/")
 def read_root(request: Request):
-    return templates.TemplateResponse("base.html", {"request": request})
+    return templates.TemplateResponse("base.html", {
+        "request": request,
+        "latest_post": {
+            "title": "Your latest post",
+            "date": "2024-03-21",
+            "excerpt": "Post preview..."
+        },
+        "latest_project": {
+            "title": "Your latest project",
+            "description": "Project description",
+            "technologies": ["Python", "FastAPI", "AI"]
+        }
+    })
